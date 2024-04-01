@@ -75,17 +75,21 @@ int
 sys_pgaccess(void)
 {
   // lab pgtbl: your code here.
-  uint64 *virtrualAddress, *bufAddress;
+  uint64 *virtrualAddress, bufAddress;
+  uint32 buf = 0;
   int numOfPages;
   argaddr(0, virtrualAddress);
-  argaddr(2, bufAddress);
+  argaddr(2, &bufAddress);
   argint(1, &numOfPages);
   for (int i = 0; i < numOfPages; i++) {
     pte_t *pte = walk(myproc()->pagetable, virtrualAddress[i], 0);
     if (*pte & PTE_A) {
-      *bufAddress |= (1L << i);
+      buf |= (1L << i);
       *pte ^= PTE_A;
     }
+  }
+  if (copyout(myproc()->pagetable, bufAddress, &buf, sizeof(buf)) < 0) {
+    return -1;
   }
   return 0;
 }
