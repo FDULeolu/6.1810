@@ -70,14 +70,26 @@ sys_sleep(void)
 }
 
 
-#ifdef LAB_PGTBL
+// #ifdef LAB_PGTBL
 int
 sys_pgaccess(void)
 {
   // lab pgtbl: your code here.
+  uint64 *virtrualAddress, *bufAddress;
+  int numOfPages;
+  argaddr(0, virtrualAddress);
+  argaddr(2, bufAddress);
+  argint(1, &numOfPages);
+  for (int i = 0; i < numOfPages; i++) {
+    pte_t *pte = walk(myproc()->pagetable, virtrualAddress[i], 0);
+    if (*pte & PTE_A) {
+      *bufAddress |= (1L << i);
+      *pte ^= PTE_A;
+    }
+  }
   return 0;
 }
-#endif
+// #endif
 
 uint64
 sys_kill(void)
