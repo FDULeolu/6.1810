@@ -450,6 +450,7 @@ copyinstr(pagetable_t pagetable, char *dst, uint64 srcva, uint64 max)
   }
 }
 
+// print out the pagetable
 void vmprint(pagetable_t pagetable) {
   printf("page table %p\n", pagetable);
   for (int i = 0; i < 512; i++) {
