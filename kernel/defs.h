@@ -63,6 +63,10 @@ void            ramdiskrw(struct buf*);
 void*           kalloc(void);
 void            kfree(void *);
 void            kinit(void);
+int             getRefCount(void*);
+int             addRefCount(void*);
+int             isCow(pagetable_t, uint64);
+void*           cowAlloc(pagetable_t, uint64);
 
 // log.c
 void            initlog(int, struct superblock*);
