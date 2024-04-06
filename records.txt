@@ -1,3 +1,4 @@
 2024.4.3 traps lab finished
 2024.4.4 cow lab finished
-2023.4.5 finish lecture 9
+2024.4.5 finish lecture 9
+2024。4.6 finish lecture 10
